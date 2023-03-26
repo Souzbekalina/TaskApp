@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import com.alina.taskapp.R
+
 import com.alina.taskapp.databinding.FragmentTaskBinding
 import com.alina.taskapp.model.Task
 
@@ -20,7 +20,7 @@ class TaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=FragmentTaskBinding.inflate(inflater,container,false)
         return binding.root
     }

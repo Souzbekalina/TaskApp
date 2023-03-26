@@ -9,7 +9,8 @@ import com.alina.taskapp.databinding.ItemOnboardingBinding
 import com.alina.taskapp.model.OnBoard
 import com.alina.taskapp.utils.loadImage
 
-class OnBoardingAdapter (private val onClick:()->Unit) : Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
+class OnBoardingAdapter (private val onClick:()->Unit, private  val onNextClick:()->Unit) :
+    Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
 
    private val  data= arrayListOf<OnBoard>(
        OnBoard("https://avatars.mds.yandex.net/i?id=04c9e6623ae817fe06b8b739e682bb3e-4233836-images-thumbs&n=13","Fresh food","Task manager Description"),
@@ -39,6 +40,9 @@ class OnBoardingAdapter (private val onClick:()->Unit) : Adapter<OnBoardingAdapt
                 onClick()
             }
             binding.btnStart.setOnClickListener{
+                onClick()
+            }
+            binding.btnNext.setOnClickListener {
                 onClick()
             }
         }
