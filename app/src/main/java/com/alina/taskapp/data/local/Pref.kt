@@ -13,6 +13,7 @@ class Pref(context: Context) {
     fun saveSeen(){
         pref.edit().putBoolean(ONBOARD_KEY,true).apply()
     }
+
     fun  saveAnyText(text:String){
         pref.edit().putString(ANY_TEXT,text).apply()
     }
@@ -26,6 +27,7 @@ class Pref(context: Context) {
     fun getName(): String{
         return pref.getString(NAME_KEY, "").toString()
     }
+
     fun saveImage(image: String){
         pref.edit().putString(IMAGE_KEY, image).apply()
     }
@@ -35,7 +37,6 @@ class Pref(context: Context) {
     }
 
     companion object{
-
         const val IMAGE_KEY = "image.key"
         const val PREF_NAME="task.name.53"
         const val NAME_KEY = "name.key"

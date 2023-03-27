@@ -1,5 +1,6 @@
 package com.alina.taskapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var pref:Pref
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,28 +39,25 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
                 R.id.navigation_notifications,
-                R.id.taskFragment
+                R.id.taskFragment,
+                R.id.profileFragment
             )
         )
         val bottomNavFragment=setOf(
             R.id.navigation_home,
             R.id.navigation_dashboard,
-            R.id.navigation_notifications
-
+            R.id.navigation_notifications,
+            R.id.profileFragment
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener(object :NavController.OnDestinationChangedListener{
-            override fun onDestinationChanged(
-                controller: NavController, destination: NavDestination, arguments: Bundle?) {
-                navView.isVisible = destination.id != R.id.taskFragment
-                navView.isVisible=bottomNavFragment.contains(destination.id)
-                if (destination.id==R.id.onBoardFragment){
-                    supportActionBar?.height
-                }else supportActionBar?.show()
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
 
-            }
-
-        })
+            navView.isVisible = bottomNavFragment.contains(destination.id)
+            if (destination.id == R.id.onBoardFragment) {
+                supportActionBar?.height
+            } else supportActionBar?.show()
+        }
     }
 }

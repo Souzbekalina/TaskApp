@@ -42,7 +42,7 @@ class onBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref=Pref(requireContext())
         binding.viewPager.adapter = adapter
-        binding.viewPager.adapter = adapter
+
         binding.indicator.setViewPager(binding.viewPager)
         adapter.registerAdapterDataObserver(binding.indicator.adapterDataObserver);
     }
