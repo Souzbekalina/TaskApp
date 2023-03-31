@@ -1,22 +1,17 @@
 package com.alina.taskapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.alina.taskapp.App
 import com.alina.taskapp.R
 import com.alina.taskapp.databinding.FragmentHomeBinding
 import com.alina.taskapp.model.Task
 import com.alina.taskapp.ui.home.adapter.TaskAdapter
-import com.alina.taskapp.ui.task.TaskFragment.Companion.TASK_KEY
-import com.alina.taskapp.ui.task.TaskFragment.Companion.TASK_REQUEST
 
 class HomeFragment : Fragment() {
 
@@ -25,7 +20,7 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private  val adapter= TaskAdapter()
+    private  val adapter= TaskAdapter(this::deleteClick)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,23 +28,40 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      setFragmentResultListener(TASK_REQUEST){ key, bundle->
-          val result=bundle.getSerializable(TASK_KEY) as Task
-          Log.e("ololo","onViewcreated " + result)
-          adapter.addTask(result)
-      }
+        setData()
         binding.rvView.adapter=adapter
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
 
+
+        }
+
+
+    }
+
+    private fun setData() {
+        val data = App.db.taskDao().getAll()
+        adapter.addTask(data)
+    }
+
+    private  fun deleteClick(task: Task) {
+        val alertdialog = AlertDialog.Builder(requireContext())
+        alertdialog.setTitle("Deleted?")
+
+        alertdialog.setNegativeButton("No") { dialog, pos ->
+            dialog?.cancel()
+        }
+        alertdialog.setPositiveButton("Yes") { dialog, pos ->
+            App.db.taskDao().delete(task)
+            setData()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

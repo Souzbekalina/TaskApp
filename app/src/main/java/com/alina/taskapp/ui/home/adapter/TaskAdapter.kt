@@ -1,22 +1,31 @@
 package com.alina.taskapp.ui.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.alina.taskapp.databinding.ItemTaskBinding
 import com.alina.taskapp.model.Task
 
-class TaskAdapter: Adapter<TaskAdapter.TaskViewHolder> (){
+class TaskAdapter(private val  onClick:(Task)->Unit): Adapter<TaskAdapter.TaskViewHolder> (){
 
     private val data :ArrayList<Task> = arrayListOf()
 
-    fun addTask(task: Task){
+    fun addTask(task:Task){
         data.add(0,task)
         notifyItemChanged(0)
+
     }
 
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addTask(task: List<Task>){
+        data.clear()
+        data.addAll(task)
+        notifyDataSetChanged()
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
       return TaskViewHolder(ItemTaskBinding.inflate(LayoutInflater.from(parent.context),parent,false))
@@ -34,9 +43,15 @@ class TaskAdapter: Adapter<TaskAdapter.TaskViewHolder> (){
         fun bind(task: Task) {
           binding.tvTitle.text=task.title
             binding.tvDesk.text=task.desk
+
+            itemView.setOnLongClickListener {
+                onClick(task)
+                false
+            }
         }
 
 
     }
 
 }
+
