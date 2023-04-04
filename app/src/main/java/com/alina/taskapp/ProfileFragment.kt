@@ -19,16 +19,16 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var pref: Pref
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-        if (result.resultCode == Activity.RESULT_OK
-            && result.data != null
-        ) {
-            val photoUri = result.data?.data
-            pref.saveImage(photoUri.toString())
-            binding.avatarAccount.loadImage(photoUri.toString())
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK
+                && result.data != null
+            ) {
+                val photoUri = result.data?.data
+                pref.saveImage(photoUri.toString())
+                binding.avatarAccount.loadImage(photoUri.toString())
+            }
         }
-    }
-
 
 
     override fun onCreateView(

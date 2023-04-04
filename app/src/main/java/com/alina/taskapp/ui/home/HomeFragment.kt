@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private  val adapter= TaskAdapter(this::deleteClick)
+    private val adapter = TaskAdapter(this::deleteClick)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setData()
-        binding.rvView.adapter=adapter
+        binding.rvView.adapter = adapter
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.taskFragment)
 
@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
         adapter.addTask(data)
     }
 
-    private  fun deleteClick(task: Task) {
+    private fun deleteClick(task: Task) {
         val alertdialog = AlertDialog.Builder(requireContext())
         alertdialog.setTitle("Deleted?")
 
@@ -60,6 +60,7 @@ class HomeFragment : Fragment() {
             App.db.taskDao().delete(task)
             setData()
         }
+        alertdialog.show().show()
     }
 
     override fun onDestroyView() {

@@ -18,5 +18,5 @@ interface TaskDao {
 
 
     @Query("SELECT * FROM task ORDER BY id DESC")
-    fun getAll():List<Task>
+    fun getAll(): List<Task>
 }
