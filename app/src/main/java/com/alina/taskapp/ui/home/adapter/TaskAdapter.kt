@@ -72,6 +72,7 @@ class TaskAdapter(private val onClick: (Task) -> Unit) : Adapter<TaskAdapter.Tas
                 color = true
             }
 
+
         }
     }
 }
